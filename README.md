@@ -81,7 +81,11 @@ schema: repo-implementation-slice
 intake → analysis → options → decision → proposal → repo-impact → specs → design → tasks → validation → archive
 ```
 
-See [docs/workflow.md](docs/workflow.md).
+See:
+
+- [docs/workflow.md](docs/workflow.md)
+- [docs/adoption-guide.md](docs/adoption-guide.md)
+- [docs/centralized-vs-hybrid.md](docs/centralized-vs-hybrid.md)
 
 ## License
 
