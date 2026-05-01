@@ -1,0 +1,78 @@
+name: product-crossrepo
+version: 1
+description: Product-level OpenSpec workflow for cross-repo features with analysis, options, repo impact, and validation gates.
+
+artifacts:
+  - id: intake
+    generates: intake.md
+    description: Raw request and initial framing
+    template: intake.md
+    instruction: Capture the request, initial problem hypothesis, constraints, and unknowns. Do not jump to implementation.
+    requires: []
+
+  - id: analysis
+    generates: analysis.md
+    description: Product analysis and problem framing
+    template: analysis.md
+    instruction: Frame the problem, users, current behavior, desired outcome, constraints, assumptions, and sources.
+    requires: [intake]
+
+  - id: options
+    generates: options.md
+    description: Solution options and tradeoffs
+    template: options.md
+    instruction: Present 2-3 viable options with pros, cons, risks, and a recommendation.
+    requires: [analysis]
+
+  - id: decision
+    generates: decision.md
+    description: Selected option and rationale
+    template: decision.md
+    instruction: Record the selected option, rationale, confidence, assumptions, and unresolved questions.
+    requires: [options]
+
+  - id: proposal
+    generates: proposal.md
+    description: OpenSpec proposal
+    template: proposal.md
+    instruction: Convert the decision into a concise OpenSpec proposal with goals, non-goals, scope, and success criteria.
+    requires: [decision]
+
+  - id: repo-impact
+    generates: repo-impact.md
+    description: Cross-repo impact matrix
+    template: repo-impact.md
+    instruction: Identify impact on protobuf-repo, server-backend, server-frontend, agent, ordering, compatibility, and rollout.
+    requires: [proposal]
+
+  - id: specs
+    generates: specs/**/*.md
+    description: Product requirements and scenarios
+    template: spec.md
+    instruction: Write product-level requirements with concrete scenarios and acceptance criteria.
+    requires: [repo-impact]
+
+  - id: design
+    generates: design.md
+    description: Cross-repo design
+    template: design.md
+    instruction: Explain the cross-repo design, contracts, data flow, compatibility, rollout, and alternatives.
+    requires: [specs]
+
+  - id: tasks
+    generates: tasks.md
+    description: Orchestration tasks
+    template: tasks.md
+    instruction: Create an orchestration checklist across repos; do not duplicate every local implementation task.
+    requires: [design]
+
+  - id: validation
+    generates: validation.md
+    description: Integration validation plan
+    template: validation.md
+    instruction: Define end-to-end validation, rollout checks, observability, and archive readiness.
+    requires: [tasks]
+
+apply:
+  requires: [tasks]
+  tracks: tasks.md

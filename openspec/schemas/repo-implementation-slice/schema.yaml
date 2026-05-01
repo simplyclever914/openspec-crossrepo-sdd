@@ -1,0 +1,43 @@
+name: repo-implementation-slice
+version: 1
+description: Lightweight repo-level OpenSpec workflow for implementing one slice of a product-level cross-repo feature.
+
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Local implementation proposal
+    template: proposal.md
+    instruction: Link to the parent product change and define this repository's scope.
+    requires: []
+
+  - id: design
+    generates: design.md
+    description: Local technical design
+    template: design.md
+    instruction: Explain implementation approach, dependencies, compatibility, tests, and risks for this repository.
+    requires: [proposal]
+
+  - id: specs
+    generates: specs/**/*.md
+    description: Local requirements and scenarios
+    template: spec.md
+    instruction: Write local requirements that map to parent product requirements/scenarios.
+    requires: [design]
+
+  - id: tasks
+    generates: tasks.md
+    description: Local implementation tasks
+    template: tasks.md
+    instruction: Break local work into actionable tasks with verification steps.
+    requires: [specs]
+
+  - id: validation
+    generates: validation.md
+    description: Local validation plan
+    template: validation.md
+    instruction: Define local tests and integration evidence needed before the repo slice is archived.
+    requires: [tasks]
+
+apply:
+  requires: [tasks]
+  tracks: tasks.md
